@@ -5,20 +5,28 @@ class UserService extends ModelService
 {
   UserService(this._actionService, this._learningContentService, this._configService) : super("user")
   {
-    _authQuery.apiUrl = "http://auth.minoch.com/v1/";
+    _authQuery.apiUrl = "https://auth.minoch.com/v1/";
   }
 
   @override
   Future delete(User user) async
   {
     await super.delete(user);
-    await _authQuery.post("users/${user.authId}/unregister", {"client":_configService.model.subdomain});
+    await _authQuery.post("users/unregister", {"client":_configService.model.subdomain});
   }
 
   @override
   Future<String> put(User user) async
   {
-    await _authQuery.put("users", {"client":"test", "email":user.email, "firstname":user.firstname, "lastname":user.lastname});
+    try
+    {
+      await _authQuery.put("users", {"client":"test", "email":user.email, "firstname":user.firstname, "lastname":user.lastname});
+    }
+    catch (e)
+    {
+      print(e.target);
+
+    }
     String id = await super.put(user);
     return id;
   }

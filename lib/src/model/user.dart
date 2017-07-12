@@ -30,7 +30,6 @@ class User extends ModelBase
     course = data["course"];
     active = data["active"] == "1";
     token = data["token"];
-    authId = data["auth_id"];
 
     if (data["actions"] != null)
     {
@@ -109,7 +108,6 @@ class User extends ModelBase
   String get token => _properties["token"];
   String get course => _properties["course"];
   bool get active => _properties["active"];
-  String get authId => _properties["auth_id"];
 
   void set actions(List<Action> value)
   {
@@ -142,5 +140,4 @@ class User extends ModelBase
   void set token(String value) { _properties["token"] = value; }
   void set course(String value) { _properties["course"] = value; }
   void set active(bool value) { _properties["active"] = value; }
-  void set authId(String value) { _properties["auth_id"] = value; }
 }
