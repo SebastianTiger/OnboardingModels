@@ -1,10 +1,10 @@
 import 'dart:async';
 import 'package:angular2/angular2.dart';
-import '../util/dig_query.dart';
 import '../model/model_base.dart' show CalendarEvent;
+import 'package:onboarding_models/src/service/service_base.dart';
 
 @Injectable()
-class CalendarService
+class CalendarService extends ServiceBase
 {
   CalendarService();
 
@@ -12,9 +12,7 @@ class CalendarService
   {
     try
     {
-      _loading = true;
-      await _dq.put("/calendar", model.encode());
-      _loading = false;
+      await httpPUT("calendar", model.encode());
     }
     on NoSuchMethodError catch (e)
     {
@@ -25,9 +23,4 @@ class CalendarService
       throw new Exception(e.target.responseText);
     }
   }
-
-  bool get isLoading => _loading;
-
-  bool _loading = false;
-  final DigQuery _dq = new DigQuery();
 }

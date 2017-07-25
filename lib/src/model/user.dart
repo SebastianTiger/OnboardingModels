@@ -29,7 +29,6 @@ class User extends ModelBase
     state = data["state"];
     course = data["course"];
     active = data["active"] == "1";
-    token = data["token"];
 
     if (data["actions"] != null)
     {
@@ -87,9 +86,18 @@ class User extends ModelBase
   List<Action> _actions = new List();
   List<LearningContent> learningContents = new List();
 
+  String parsePlaceholders(String input)
+  {
+    if (firstname != null) input = input.replaceAll("%user_firstname%", firstname);
+    if (lastname != null) input = input.replaceAll("%user_lastname%", lastname);
+    if (email != null) input = input.replaceAll("%user_email%", email);
+    if (phone != null) input = input.replaceAll("%user_phone%", phone);
+    if (start != null) input = input.replaceAll("%user_start_date%", start);
+    return input;
+  }
+
   bool get hasEmail => email != null && email.isNotEmpty;
   bool get hasPhone => phone != null && phone.isNotEmpty;
-
   List<Action> get actions => _actions;
   DateTime get startAsDateTime => _properties["start_date"];
   DateTime get created => _properties["created"];
@@ -100,12 +108,11 @@ class User extends ModelBase
   String get phone => _properties["phone"];
   DateTime get lastLogin => _properties["last_login"];
   DateTime get notified => _properties["notified"];
-  String get start => ModelBase.dfDate.format(_properties["start_date"]);
+  String get start => (_properties["start_date"] == null) ? null : ModelBase.dfDate.format(_properties["start_date"]);
   String get emailMessage => _properties["email_message"];
   String get smsMessage => _properties["sms_message"];
   String get emailSubject => _properties["email_subject"];
   String get state => _properties["state"];
-  String get token => _properties["token"];
   String get course => _properties["course"];
   bool get active => _properties["active"];
 
@@ -137,7 +144,6 @@ class User extends ModelBase
   void set smsMessage(String value) { _properties["sms_message"] = value; }
   void set emailSubject(String value) { _properties["email_subject"] = value; }
   void set state(String value) { _properties["state"] = value; }
-  void set token(String value) { _properties["token"] = value; }
   void set course(String value) { _properties["course"] = value; }
   void set active(bool value) { _properties["active"] = value; }
 }

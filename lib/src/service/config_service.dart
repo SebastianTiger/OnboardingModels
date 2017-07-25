@@ -1,19 +1,17 @@
 import 'dart:async';
-import 'dart:convert';
 import 'package:angular2/angular2.dart';
-import '../util/dig_query.dart';
-import '../model/model_base.dart' show Config;
+import 'package:onboarding_models/src/model/model_base.dart' show Config;
+import 'package:onboarding_models/src/service/service_base.dart';
 
 @Injectable()
-class ConfigService
+class ConfigService extends ServiceBase
 {
   ConfigService();
 
   Future<Config> fetchModel() async
   {
-    _loading = true;
-    _model = new Config.decode(JSON.decode(await _dq.get("/config/1")));
-    _loading = false;
+    Map<String, dynamic> response = await httpGET("config/1");
+    _model = new Config.decode(response["body"]);
     return _model;
   }
 
@@ -21,9 +19,7 @@ class ConfigService
   {
     try
     {
-      _loading = true;
-      await _dq.put("/config/1", model.encode());
-      _loading = false;
+      await httpPUT("config/1", model.encode());
     }
     on NoSuchMethodError catch (e)
     {
@@ -35,10 +31,7 @@ class ConfigService
     }
   }
 
-  bool get isLoading => _loading;
   Config get model => _model;
 
   Config _model;
-  bool _loading = false;
-  final DigQuery _dq = new DigQuery();
 }

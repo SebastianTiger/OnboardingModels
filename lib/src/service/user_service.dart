@@ -3,33 +3,7 @@ part of model_service;
 @Injectable()
 class UserService extends ModelService
 {
-  UserService(this._actionService, this._learningContentService, this._configService) : super("user")
-  {
-    _authQuery.apiUrl = "https://auth.minoch.com/v1/";
-  }
-
-  @override
-  Future delete(User user) async
-  {
-    await super.delete(user);
-    await _authQuery.post("users/unregister", {"client":_configService.model.subdomain});
-  }
-
-  @override
-  Future<String> put(User user) async
-  {
-    try
-    {
-      await _authQuery.put("users", {"client":"test", "email":user.email, "firstname":user.firstname, "lastname":user.lastname});
-    }
-    catch (e)
-    {
-      print(e.target);
-
-    }
-    String id = await super.put(user);
-    return id;
-  }
+  UserService(this._actionService, this._learningContentService) : super("user");
 
   @override
   Future<User> fetchModel(String id) async
@@ -50,20 +24,6 @@ class UserService extends ModelService
     return user;
   }
 
-  Future<User> login(String username, String password) async
-  {
-    try
-    {
-      return await fetchModel(await _dq.post("/user_auth", {"msg":"login", "username":username, "password":password}));
-    }
-    catch (e)
-    {
-      print(e);
-      print(e.target.responseText);
-      return null;
-    }
-  }
-
   void populateActionsAndLearningContents(User user)
   {
     user.actions.where((a) => a.name == null).forEach((a)
@@ -74,9 +34,9 @@ class UserService extends ModelService
   }
 
   @override
-  Map<String, User> _onDataFetched(String response, bool buffer)
+  Map<String, User> _onDataFetched(Map<String, dynamic> response, bool buffer)
   {
-    List<Map<String, String>> table = JSON.decode(response);
+    List<Map<String, String>> table = response['body'];
     Map<String, User> output = new Map();
     table.forEach((row) => output[row["id"]] = new User.decode(row));
     if (buffer) _data = output;
@@ -84,8 +44,5 @@ class UserService extends ModelService
   }
 
   final ActionService _actionService;
-  final ConfigService _configService;
   final LearningContentService _learningContentService;
-
-  final DigQuery _authQuery = new DigQuery();
 }

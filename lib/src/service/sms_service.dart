@@ -1,31 +1,27 @@
 import 'dart:async' show Future;
 import 'package:angular2/core.dart';
-import '../util/dig_query.dart';
+import 'package:onboarding_models/src/service/service_base.dart';
 
 @Injectable()
-class SmsService
+class SmsService extends ServiceBase
 {
   SmsService();
 
   Future put(String to, String body, bool reset_user_password) async
   {
     if (to == null || body == null || to.isEmpty || body.isEmpty) return;
-
     try
     {
-      _loading = true;
-      await _dq.put("/sms", {"to":to, "body":body, "reset_user_password":reset_user_password});
-      _loading = false;
+      await httpPUT("sms", {"to":to, "body":body});
     }
     catch (e)
     {
-      _loading = false;
       throw new Exception(e.target.responseText);
     }
   }
 
-  bool get isLoading => _loading;
+  //bool get isLoading => _loading;
 
-  final DigQuery _dq = new DigQuery();
-  bool _loading = false;
+  //final DigQuery _dq = new DigQuery();
+  //bool _loading = false;
 }

@@ -1,11 +1,9 @@
 library model_service;
 
 import 'dart:async';
-import 'dart:convert' show JSON;
 import 'package:angular2/core.dart';
-import '../service/config_service.dart';
-import '../model/model_base.dart';
-import '../util/dig_query.dart';
+import 'package:onboarding_models/src/model/model_base.dart';
+import 'package:onboarding_models/src/service/service_base.dart';
 
 part 'action_service.dart';
 part 'course_service.dart';
@@ -13,7 +11,7 @@ part 'learning_content_service.dart';
 part 'push_notification_service.dart';
 part 'user_service.dart';
 
-abstract class ModelService
+abstract class ModelService extends ServiceBase
 {
   ModelService(this._source);
 
@@ -21,7 +19,7 @@ abstract class ModelService
   {
     try
     {
-      return _onDataFetched((where == null) ? await _dq.get("/$_source") : await _dq.get("/$_source?$where"), buffer);
+      return _onDataFetched((where == null) ? await httpGET(_source) : await httpGET("$_source?$where"), buffer);
     } catch(e)
     {
       print(e.target.responseText);
@@ -35,15 +33,11 @@ abstract class ModelService
     {
       try
       {
-        await _dq.delete("/$_source/${model.id}");
+        await httpDELETE("$_source/${model.id}");
         if (_data.containsKey(model.id)) _data.remove(model.id);
-
         _data = new Map.from(_data);
       }
-      catch (e)
-      {
-        throw new Exception(e.target.responseText);
-      }
+      catch (e) { throw new Exception(e.target.responseText); }
     }
   }
 
@@ -51,8 +45,9 @@ abstract class ModelService
   {
     try
     {
-      if (model.id == null) model.id = await _dq.put("/$_source", model.encode());
-      else model.id = await _dq.put("/$_source/${model.id}", model.encode());
+      if (model.id == null) model.id = (await httpPUT("$_source", model.encode()))['body'];
+      else model.id = (await httpPUT("$_source/${model.id}", model.encode()))['body'];
+
       _data[model.id] = model;
       _data = new Map.from(_data);
       return model.id;
@@ -70,9 +65,8 @@ abstract class ModelService
   Future<ModelBase> fetchModel(String id) async
   {
     if (id == null || id.isEmpty) return null;
-    String response = await _dq.get("/$_source/$id");
-    if (response.isEmpty) return null;
-    _data[id] = create(JSON.decode(response));
+    Map<String, dynamic> response = await httpGET("$_source/$id");
+    _data[id] = create(response['body']);
     return _data[id];
   }
 
@@ -112,13 +106,8 @@ abstract class ModelService
     }
   }
 
-  Map<String, ModelBase> _onDataFetched(String response, bool buffer);
-
+  Map<String, ModelBase> _onDataFetched(Map<String, dynamic> response, bool buffer);
   Map<String, ModelBase> get data => _data;
-  bool get isLoading => _isLoading;
-
-  bool _isLoading = false;
   Map<String, ModelBase> _data = new Map();
-  final DigQuery _dq = new DigQuery();
   final String _source;
 }

@@ -1,23 +1,22 @@
 import 'dart:async' show Future;
-import 'dart:convert' show JSON;
 import 'package:angular2/core.dart';
-import '../model/file.dart';
-import '../util/dig_query.dart';
+import 'package:onboarding_models/src/model/file.dart';
+import 'package:onboarding_models/src/service/service_base.dart';
 
 @Injectable()
-class FileService
+class FileService extends ServiceBase
 {
   FileService()
   {
-    _dq.get("/file").then(_onDataFetched).catchError((e) => print(e.target.responseText));
+    httpGET("file").then(_onDataFetched).catchError((e) => print(e.target.responseText));
   }
 
   Future put(String filename, String url_data) async
   {
     try
     {
-      await _dq.put("/file", {"filename":filename, "data":url_data});
-      await _onDataFetched(await _dq.get("/file"));
+      await httpPUT("file", {"filename":filename, "data":url_data});
+      await _onDataFetched(await httpGET("file"));
     }
     catch (e)
     {
@@ -25,16 +24,13 @@ class FileService
     }
   }
 
-  void _onDataFetched(String response)
+  void _onDataFetched(Map<String, dynamic> response)
   {
-    List<Map<String, String>> table = JSON.decode(response);
+    List<Map<String, String>> table = response['body'];
     _data = new Map();
     table.forEach((row) => _data[row["name"]] = new FileModel(row["name"], row["type"], row["size"]));
   }
 
   Map<String, FileModel> get data => _data;
-
   Map<String, FileModel> _data;
-  final DigQuery _dq = new DigQuery();
-
 }

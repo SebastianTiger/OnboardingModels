@@ -7,7 +7,8 @@ class PhraseService
 
   String get(String key, {Map<String, String> params : null, bool capitalize_first : true})
   {
-    if (key == null || key.isEmpty) return "";
+    if (key == null) return null;
+    if (key.isEmpty) return "";
     String phrase = (_phraseData.containsKey(key)) ? _phraseData[key] : key;
     if (capitalize_first) phrase = phrase[0].toUpperCase() + phrase.substring(1, phrase.length);
 
@@ -100,6 +101,7 @@ class PhraseService
     "first_day_at_work" : "första dagen",
     "footer_learning_content" : "Lärinnehåll i sidfot",
     "footer_learning_content_description" : "Välj vilket lärinnehåll i biblioteket som ska visas i sidfoten.",
+    "forgot_password" : "glömt lösenord",
     "frontpage" : "portal",
     "frontpage_design" : "portaldesign",
     "icon" : "ikon",
@@ -117,6 +119,7 @@ class PhraseService
     "library_learning_contents" : "lärinnehåll i bibliotek",
     "list" : "lista",
     "location" : "plats",
+    "login" : "logga in",
     "logout" : "logga ut",
     "logotype" : "logotyp",
     "max_filesize_exceeded" : "den maximala filstorleken har överskridits",
@@ -133,6 +136,7 @@ class PhraseService
     "notify_email" : "skicka mejl",
     "notify_sms" : "skicka SMS",
     "page" : "sida",
+    "password" : "lösenord",
     "phone" : "mobilnummer",
     "phrase_plural" : "texter",
     "previous" : "föregående",
