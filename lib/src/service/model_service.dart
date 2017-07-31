@@ -17,56 +17,34 @@ abstract class ModelService extends ServiceBase
 
   Future<Map<String, ModelBase>> fetchAll({String where = null, buffer = true}) async
   {
-    try
-    {
-      return _onDataFetched((where == null) ? await httpGET(_source) : await httpGET("$_source?$where"), buffer);
-    } catch(e)
-    {
-      print(e.target.responseText);
-      return {};
-    }
+    return _onDataFetched((where == null) ? await httpGET(_source) : await httpGET("$_source?$where"), buffer);
   }
 
   Future delete(ModelBase model) async
   {
     if (model != null && model.id != null)
     {
-      try
-      {
-        await httpDELETE("$_source/${model.id}");
-        if (_data.containsKey(model.id)) _data.remove(model.id);
-        _data = new Map.from(_data);
-      }
-      catch (e) { throw new Exception(e.target.responseText); }
+      await httpDELETE("$_source/${model.id}");
+      if (_data.containsKey(model.id)) _data.remove(model.id);
+      _data = new Map.from(_data);
     }
   }
 
   Future<String> put(ModelBase model) async
   {
-    try
-    {
-      if (model.id == null) model.id = (await httpPUT("$_source", model.encode()))['body'];
-      else model.id = (await httpPUT("$_source/${model.id}", model.encode()))['body'];
+    if (model.id == null) model.id = (await httpPUT("$_source", model.encode()));
+    else model.id = (await httpPUT("$_source/${model.id}", model.encode()));
 
-      _data[model.id] = model;
-      _data = new Map.from(_data);
-      return model.id;
-    }
-    on NoSuchMethodError catch (e)
-    {
-      throw new Exception(e);
-    }
-    catch (e)
-    {
-      throw new Exception(e.target.responseText);
-    }
+    _data[model.id] = model;
+    _data = new Map.from(_data);
+    return model.id;
   }
 
   Future<ModelBase> fetchModel(String id) async
   {
     if (id == null || id.isEmpty) return null;
     Map<String, dynamic> response = await httpGET("$_source/$id");
-    _data[id] = create(response['body']);
+    _data[id] = create(response);
     return _data[id];
   }
 
@@ -106,7 +84,7 @@ abstract class ModelService extends ServiceBase
     }
   }
 
-  Map<String, ModelBase> _onDataFetched(Map<String, dynamic> response, bool buffer);
+  Map<String, ModelBase> _onDataFetched(List<Map<String, dynamic>> response, bool buffer);
   Map<String, ModelBase> get data => _data;
   Map<String, ModelBase> _data = new Map();
   final String _source;

@@ -10,11 +10,11 @@ class ActionService extends ModelService
   Action getModel(String id) => _data.containsKey(id) ? _data[id]: null;
 
   @override
-  Map<String, Action> _onDataFetched(Map<String, dynamic> response, bool buffer)
+  Map<String, Action> _onDataFetched(List<Map<String, dynamic>> response, bool buffer)
   {
-    List<Map<String, dynamic>> table = response['body'];
+    //List<Map<String, dynamic>> table = response['body'];
     Map<String, Action> output = new Map();
-    table.forEach((row) => output[row["id"]] = new Action.decode(row));
+    response.forEach((row) => output[row["id"]] = new Action.decode(row));
     if (buffer) _data = output;
     return output;
   }

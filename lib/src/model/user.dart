@@ -88,6 +88,7 @@ class User extends ModelBase
 
   String parsePlaceholders(String input)
   {
+    if (username != null) input = input.replaceAll("%user_username%", username);
     if (firstname != null) input = input.replaceAll("%user_firstname%", firstname);
     if (lastname != null) input = input.replaceAll("%user_lastname%", lastname);
     if (email != null) input = input.replaceAll("%user_email%", email);
@@ -118,6 +119,11 @@ class User extends ModelBase
 
   void set actions(List<Action> value)
   {
+    if (start == null)
+    {
+      start = ModelBase.dfDate.format(new DateTime.now());
+    }
+
     _actions = new List.from(value);
     for (Action action in _actions)
     {
@@ -138,7 +144,7 @@ class User extends ModelBase
       DateTime date = DateTime.parse(value);
       _properties["start_date"] = new DateTime(date.year, date.month, date.day, 12);
     }
-    on FormatException catch(e) { print(e); }
+    catch(e) { print(e); }
   }
   void set emailMessage(String value) { _properties["email_message"] = value; }
   void set smsMessage(String value) { _properties["sms_message"] = value; }

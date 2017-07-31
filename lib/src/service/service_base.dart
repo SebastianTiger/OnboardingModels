@@ -5,41 +5,70 @@ import 'package:http/http.dart' as http show Response;
 
 abstract class ServiceBase
 {
-  Future<Map<String, dynamic>> httpPOST(String url, Map<String, dynamic> body) async
+  Future<dynamic> httpPOST(String url, Map<String, dynamic> body) async
   {
     _loading = true;
-    http.Response response = await _client.post(_apiBase + url, body: JSON.encode(body));
+    http.Response response = await client.post(_apiBase + url, body: JSON.encode(body));
     _loading = false;
-    return JSON.decode(response.body);
+
+    if (response.statusCode != 200)
+    {
+      throw new Exception("${response.body} (http-status: ${response.statusCode})");
+    }
+
+    return response.body;
   }
 
-  Future<Map<String, dynamic>> httpGET(String url) async
+  /**
+   * Returns either a Map<String, dynamic> if a single resource was requested,
+   * or a List<Map<String, dynamic> if multiple resources.
+   */
+  Future<dynamic> httpGET(String url) async
   {
     _loading = true;
-    http.Response response = await _client.get(_apiBase + url);
+    http.Response response = await client.get(_apiBase + url);
     _loading = false;
+
+    if (response.statusCode != 200)
+    {
+      throw new Exception("${response.body} (http-status: ${response.statusCode})");
+    }
+
     return JSON.decode(response.body);
   }
 
   /**
-   * Returns id of created resource
+   * Returns id of created resource in most cases, or a status message
    */
-  Future<Map<String, String>> httpPUT(String url, Map<String, dynamic> body) async
+  Future<String> httpPUT(String url, Map<String, dynamic> body) async
   {
     _loading = true;
-    http.Response response = await _client.put(_apiBase + url, body: body);
+    http.Response response = await client.put(_apiBase + url, body: JSON.encode(body));
     _loading = false;
-    return JSON.decode(response.body);
+
+    if (response.statusCode != 200)
+    {
+      throw new Exception("${response.body} (http-status: ${response.statusCode})");
+    }
+
+    return response.body;
   }
 
   Future httpDELETE(String url) async
   {
-    await _client.delete(url);
+    _loading = true;
+    http.Response response = await client.delete(_apiBase + url);
+    _loading = false;
+
+    if (response.statusCode != 200)
+    {
+      throw new Exception("${response.body} (http-status: ${response.statusCode})");
+    }
   }
 
   bool get loading => _loading;
 
   final String _apiBase = "https://api.introduktion.nu/v1/admin.php/";
-  final BrowserClient _client = new BrowserClient();
+  final BrowserClient client = new BrowserClient();
   bool _loading = false;
 }

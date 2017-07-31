@@ -9,15 +9,6 @@ class MailService extends ServiceBase
 
   Future put(String to, String subject, String body) async
   {
-    if (to == null || subject == null || body == null || to.isEmpty || subject.isEmpty || body.isEmpty) return;
-
-    try
-    {
-      await httpPUT("mail", {"to":to, "subject":subject, "body":body});
-    }
-    catch (e)
-    {
-      throw new Exception(e.target.responseText);
-    }
+    await httpPUT("mail", {"to":to, "subject":subject, "body":body});
   }
 }

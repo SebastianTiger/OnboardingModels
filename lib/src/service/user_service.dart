@@ -34,11 +34,10 @@ class UserService extends ModelService
   }
 
   @override
-  Map<String, User> _onDataFetched(Map<String, dynamic> response, bool buffer)
+  Map<String, User> _onDataFetched(List<Map<String, dynamic>> response, bool buffer)
   {
-    List<Map<String, String>> table = response['body'];
     Map<String, User> output = new Map();
-    table.forEach((row) => output[row["id"]] = new User.decode(row));
+    response.forEach((row) => output[row["id"]] = new User.decode(row));
     if (buffer) _data = output;
     return output;
   }

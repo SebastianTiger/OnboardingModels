@@ -11,11 +11,10 @@ class PushNotificationService extends ModelService
   PushNotification create(Map<String, dynamic> model_data) => new PushNotification.decode(model_data);
 
   @override
-  Map<String, PushNotification> _onDataFetched(Map<String, dynamic> response, bool buffer)
+  Map<String, PushNotification> _onDataFetched(List<Map<String, dynamic>> response, bool buffer)
   {
-    List<Map<String, dynamic>> table = response['body'];
     Map<String, PushNotification> output = new Map();
-    table.forEach((row) => output[row["id"]] = new PushNotification.decode(row));
+    response.forEach((row) => output[row["id"]] = new PushNotification.decode(row));
     if (buffer) _data = output;
     return output;
   }

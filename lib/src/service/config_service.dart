@@ -10,8 +10,8 @@ class ConfigService extends ServiceBase
 
   Future<Config> fetchModel() async
   {
-    Map<String, dynamic> response = await httpGET("config/1");
-    _model = new Config.decode(response["body"]);
+    dynamic response = await httpGET("config/1");
+    _model = new Config.decode(response);
     return _model;
   }
 

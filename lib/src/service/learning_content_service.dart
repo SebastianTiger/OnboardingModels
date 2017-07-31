@@ -11,11 +11,10 @@ class LearningContentService extends ModelService
   LearningContent create(Map<String, dynamic> model_data) => new LearningContent.decode(model_data);
 
   @override
-  Map<String, LearningContent> _onDataFetched(Map<String, dynamic> response, bool buffer)
+  Map<String, LearningContent> _onDataFetched(List<Map<String, dynamic>> response, bool buffer)
   {
-    List<Map<String, String>> table = response['body'];
     Map<String, LearningContent> output = new Map();
-    table.forEach((row) => output[row["id"]] = new LearningContent.decode(row));
+    response.forEach((row) => output[row["id"]] = new LearningContent.decode(row));
     if (buffer) _data = output;
     return output;
   }

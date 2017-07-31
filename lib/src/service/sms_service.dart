@@ -7,21 +7,9 @@ class SmsService extends ServiceBase
 {
   SmsService();
 
-  Future put(String to, String body, bool reset_user_password) async
+  Future put(String to, String body) async
   {
     if (to == null || body == null || to.isEmpty || body.isEmpty) return;
-    try
-    {
-      await httpPUT("sms", {"to":to, "body":body});
-    }
-    catch (e)
-    {
-      throw new Exception(e.target.responseText);
-    }
+    await httpPUT("sms", {"to":to, "body":body});
   }
-
-  //bool get isLoading => _loading;
-
-  //final DigQuery _dq = new DigQuery();
-  //bool _loading = false;
 }

@@ -28,11 +28,10 @@ class CourseService extends ModelService
   }
 
   @override
-  Map<String, Course> _onDataFetched(Map<String, dynamic> response, bool buffer)
+  Map<String, Course> _onDataFetched(List<Map<String, dynamic>> response, bool buffer)
   {
-    List<Map<String, String>> table = response['body'];
     Map<String, Course> output = new Map();
-    table.forEach((row) => output[row["id"]] = new Course.decode(row));
+    response.forEach((row) => output[row["id"]] = new Course.decode(row));
     if (buffer) _data = output;
     return output;
   }
