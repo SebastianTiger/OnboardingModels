@@ -9,17 +9,23 @@ class CourseService extends ModelService
   Course getModel(String id)
   {
     if (!_data.containsKey(id)) return null;
+    return _data[id];
+  }
 
-    Course course = _data[id];
-    populateActionsAndLearningContents(course);
+  @override
+  Future<Course> fetchModel(String id) async
+  {
+    Course course = await super.fetchModel(id);
+    _populateActionsAndLearningContents(course);
     return course;
   }
 
   @override
   Course create(Map<String, dynamic> model_data) => new Course.decode(model_data);
 
-  void populateActionsAndLearningContents(Course course)
+  void _populateActionsAndLearningContents(Course course)
   {
+    if (course == null || _learningContentService == null || _actionService == null) return;
     course.actions.where((a) => a.name == null).forEach((a)
     => a.copyData(_actionService.getModel(a.id)));
 
@@ -31,7 +37,12 @@ class CourseService extends ModelService
   Map<String, Course> _onDataFetched(List<Map<String, dynamic>> response, bool buffer)
   {
     Map<String, Course> output = new Map();
-    response.forEach((row) => output[row["id"]] = new Course.decode(row));
+    response.forEach((row)
+    {
+      Course course = new Course.decode(row);
+      _populateActionsAndLearningContents(course);
+      output[row["id"]] = course;
+    });
     if (buffer) _data = output;
     return output;
   }

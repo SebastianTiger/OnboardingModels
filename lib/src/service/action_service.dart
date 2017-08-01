@@ -12,7 +12,6 @@ class ActionService extends ModelService
   @override
   Map<String, Action> _onDataFetched(List<Map<String, dynamic>> response, bool buffer)
   {
-    //List<Map<String, dynamic>> table = response['body'];
     Map<String, Action> output = new Map();
     response.forEach((row) => output[row["id"]] = new Action.decode(row));
     if (buffer) _data = output;

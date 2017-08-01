@@ -9,7 +9,7 @@ class UserService extends ModelService
   Future<User> fetchModel(String id) async
   {
     User user = await super.fetchModel(id);
-    if (user != null) populateActionsAndLearningContents(user);
+    _populateActionsAndLearningContents(user);
     return user;
   }
 
@@ -19,13 +19,13 @@ class UserService extends ModelService
   User getModel(String id)
   {
     if (!_data.containsKey(id)) return null;
-    User user = _data[id];
-    populateActionsAndLearningContents(user);
-    return user;
+    return _data[id];
   }
 
-  void populateActionsAndLearningContents(User user)
+  void _populateActionsAndLearningContents(User user)
   {
+    if (user == null || _learningContentService == null || _actionService == null) return;
+
     user.actions.where((a) => a.name == null).forEach((a)
     => a.copyData(_actionService.getModel(a.id)));
 
@@ -37,7 +37,12 @@ class UserService extends ModelService
   Map<String, User> _onDataFetched(List<Map<String, dynamic>> response, bool buffer)
   {
     Map<String, User> output = new Map();
-    response.forEach((row) => output[row["id"]] = new User.decode(row));
+    response.forEach((row)
+    {
+      User usr = new User.decode(row);
+      _populateActionsAndLearningContents(usr);
+      output[row["id"]] = usr;
+    });
     if (buffer) _data = output;
     return output;
   }
