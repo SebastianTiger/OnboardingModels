@@ -68,7 +68,7 @@ abstract class ServiceBase
 
   bool get loading => _loading;
 
-  final String _apiBase = "https://api.introduktion.nu/v1/admin.php/";
+  final String _apiBase = "https://api.introduktion.nu/v1/index.php/";
   final BrowserClient client = new BrowserClient();
   bool _loading = false;
 }

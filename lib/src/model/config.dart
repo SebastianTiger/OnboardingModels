@@ -25,7 +25,7 @@ class Config extends ModelBase
   String get imgLogo => _properties["logo_base64"];
   String get imgTimelineBackground => _properties["timeline_background_base64"];
   String get favicon => _properties["favicon_base64"];
-  String get subdomain => _properties["subdomain"];
+  //String get subdomain => _properties["subdomain"];
 
   void set color1(String value) { _properties["color1"] = value; }
   void set color2(String value) { _properties["color2"] = value; }
