@@ -75,12 +75,23 @@ abstract class ModelService extends ServiceBase
   {
     if (value is String)
     {
-      return _data.keys.where((id) =>
-      _data[id].properties[property] != null && (_data[id].properties[property] as String).toLowerCase().compareTo(value.toLowerCase()) == 0).toList();
+      Iterable<String> ids = _data.keys.where((id)
+      {
+        return _data[id].properties[property] != null &&
+            (_data[id].properties[property] as String).toLowerCase()
+                .compareTo(value.toLowerCase()) == 0;
+      });
+
+      return ids.isEmpty ? [] : ids.toList();
     }
     else
     {
-      return _data.keys.where((id) => _data[id].properties[property] != null && _data[id].properties[property] == value).toList();
+      Iterable<String> ids = _data.keys.where((id)
+      {
+        return _data[id].properties[property] != null && _data[id].properties[property] == value;
+      });
+
+      return (ids.isEmpty) ? [] : ids.toList();
     }
   }
 

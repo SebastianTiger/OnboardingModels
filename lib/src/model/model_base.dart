@@ -31,9 +31,7 @@ abstract class ModelBase extends DataTableModel
       if (value is String || value is num || value is bool) data[key] = value;
       else if (value is DateTime) data[key] = df.format(value);
     });
-
     data["id"] = id;
-
     return data;
   }
 

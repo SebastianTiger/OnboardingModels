@@ -8,7 +8,7 @@ class FileService extends ServiceBase
 {
   FileService()
   {
-    httpGET("file").then(_onDataFetched).catchError((e) => print(e.target.responseText));
+    httpGET("file").then(_onDataFetched).catchError((e) => print(e));
   }
 
   Future put(String filename, String url_data) async
@@ -24,11 +24,15 @@ class FileService extends ServiceBase
     }
   }
 
-  void _onDataFetched(Map<String, dynamic> response)
+  Future<String> fetchUsedSpace() async
   {
-    List<Map<String, String>> table = response['body'];
+    return await httpPOST("file/fetch_used_space", null);
+  }
+
+  void _onDataFetched(List<Map<String, dynamic>> response)
+  {
     _data = new Map();
-    table.forEach((row) => _data[row["name"]] = new FileModel(row["name"], row["type"], row["size"]));
+    response.forEach((row) => _data[row["name"]] = new FileModel(row["name"], row["type"], row["size"]));
   }
 
   Map<String, FileModel> get data => _data;

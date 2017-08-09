@@ -39,9 +39,10 @@ class UserService extends ModelService
     Map<String, User> output = new Map();
     response.forEach((row)
     {
+      String id = row["id"];
       User usr = new User.decode(row);
       _populateActionsAndLearningContents(usr);
-      output[row["id"]] = usr;
+      output[id] = usr;
     });
     if (buffer) _data = output;
     return output;

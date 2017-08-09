@@ -107,7 +107,6 @@ class User extends ModelBase
   String get username => _properties["username"];
   String get email => _properties["email"];
   String get phone => _properties["phone"];
-  DateTime get lastLogin => _properties["last_login"];
   DateTime get notified => _properties["notified"];
   String get start => (_properties["start_date"] == null) ? null : ModelBase.dfDate.format(_properties["start_date"]);
   String get emailMessage => _properties["email_message"];
@@ -135,7 +134,6 @@ class User extends ModelBase
   void set username(String value) { _properties["username"] = value; }
   void set email(String value) { _properties["email"] = value; }
   void set phone(String value) { _properties["phone"] = value; }
-  void set lastLogin(DateTime value) { _properties["last_login"] = value; }
   void set notified(DateTime value) { _properties["notified"] = value; }
   void set start(String value)
   {

@@ -9,6 +9,6 @@ class MailService extends ServiceBase
 
   Future put(String to, String subject, String body) async
   {
-    await httpPUT("mail", {"to":to, "subject":subject, "body":body});
+    print(await httpPUT("mail", {"to":to, "subject":subject, "body":body}));
   }
 }

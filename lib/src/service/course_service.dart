@@ -39,9 +39,10 @@ class CourseService extends ModelService
     Map<String, Course> output = new Map();
     response.forEach((row)
     {
+      String id = row["id"];
       Course course = new Course.decode(row);
       _populateActionsAndLearningContents(course);
-      output[row["id"]] = course;
+      output[id] = course;
     });
     if (buffer) _data = output;
     return output;
