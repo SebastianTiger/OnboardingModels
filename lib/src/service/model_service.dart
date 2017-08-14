@@ -17,7 +17,15 @@ abstract class ModelService extends ServiceBase
 
   Future<Map<String, ModelBase>> fetchAll({String where = null, buffer = true}) async
   {
-    return _onDataFetched((where == null) ? await httpGET(_source) : await httpGET("$_source?$where"), buffer);
+    try
+    {
+      return _onDataFetched((where == null) ? await httpGET(_source) : await httpGET("$_source?$where"), buffer);
+    }
+    catch (e)
+    {
+      print(e);
+      return {};
+    }
   }
 
   Future delete(ModelBase model) async

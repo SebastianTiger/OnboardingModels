@@ -20,7 +20,7 @@ class CalendarService extends ServiceBase
     }
     catch (e)
     {
-      throw new Exception(e.target.responseText);
+      throw new Exception(e);
     }
   }
 }

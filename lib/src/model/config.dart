@@ -8,6 +8,8 @@ class Config extends ModelBase
     _properties = new Map.from(data);
     smsCount = int.parse(_properties["sms_count"]);
     uploadQuota = int.parse(_properties["upload_quota"]);
+    modules = JSON.decode(_properties["modules"]);
+
     int dotIndex = Uri.base.host.indexOf(".");
     _client = Uri.base.host.substring(0, (dotIndex > 0) ? dotIndex : Uri.base.host.length);
     if (_client == "localhost") _client = "sandbox";
@@ -29,6 +31,7 @@ class Config extends ModelBase
   String get favicon => _properties["favicon_base64"];
   int get smsCount => _properties["sms_count"];
   int get uploadQuota =>  _properties["upload_quota"];
+  List<String> get modules => _properties["modules"];
   String get client => _client;
 
   void set color1(String value) { _properties["color1"] = value; }
@@ -40,6 +43,7 @@ class Config extends ModelBase
   void set favicon(String value) { _properties["favicon_base64"] = value; }
   void set smsCount(int value) { _properties["sms_count"] = value; }
   void set uploadQuota(int value) { _properties["upload_quota"] = value; }
+  void set modules(List<String> value) { _properties["modules"] = value; }
 
   String _client;
 }

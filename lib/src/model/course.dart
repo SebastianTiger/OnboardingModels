@@ -6,8 +6,6 @@ class Course extends ModelBase
   Course() : super()
   {
     name = "";
-    footerLearningContent1 = "";
-    footerLearningContent2 = "";
     video1 = "";
     video2 = "";
     video3 = "";
@@ -16,12 +14,18 @@ class Course extends ModelBase
   @override
   Course.decode(Map<String, dynamic> data) : super.decode(data)
   {
-    footerLearningContent1 = data["footer_learning_content1"];
-    footerLearningContent2 = data["footer_learning_content2"];
     name = data["name"];
     video1 = data["video1"];
     video2 = data["video2"];
     video3 = data["video3"];
+
+    try
+    {
+      Map<String, dynamic> moduleData = JSON.decode(data["module_data"]);
+      if (moduleData.containsKey("linkedin")) linkedInModule = new LinkedInModule.decode(moduleData["linkedin"]);
+      /// TODO decode any new modules here
+    }
+    on FormatException catch (e) { print(e); }
 
     if (data["actions"] != null)
     {
@@ -53,6 +57,14 @@ class Course extends ModelBase
     Map<String, dynamic> data = super.encode();
     data["actions"] = JSON.encode(actions.map((action) => action.courseIndexEncoded).toList());
     data["learning_contents"] = JSON.encode(learningContents.map((learning_content) => learning_content.courseIndexEncoded).toList());
+
+    Map<String, dynamic> moduleData = new Map();
+    if (linkedInModule != null) moduleData["linkedin"] = linkedInModule.data;
+    /// TODO encode any new modules here
+
+    data["module_data"] = JSON.encode(moduleData);
+
+
     return data;
   }
 
@@ -71,8 +83,6 @@ class Course extends ModelBase
       name != null && name.isNotEmpty
           && actions.isNotEmpty
           && learningContents.isNotEmpty
-          && footerLearningContent1 != null && footerLearningContent1.isNotEmpty
-          && footerLearningContent2 != null && footerLearningContent2.isNotEmpty
           && video1 != null && video1.isNotEmpty
           && video2 != null && video2.isNotEmpty
           && video3 != null && video3.isNotEmpty;
@@ -80,17 +90,15 @@ class Course extends ModelBase
   List<Action> actions = new List();
   List<LearningContent> learningContents = new List();
 
-  String get footerLearningContent1 => _properties["footer_learning_content1"];
-  String get footerLearningContent2 => _properties["footer_learning_content2"];
   String get name => _properties["name"];
   String get video1 => _properties["video1"];
   String get video2 => _properties["video2"];
   String get video3 => _properties["video3"];
 
-  void set footerLearningContent1(String value) { _properties["footer_learning_content1"] = value; }
-  void set footerLearningContent2(String value) { _properties["footer_learning_content2"] = value; }
   void set name(String value) { _properties["name"] = value; }
   void set video1(String value) { _properties["video1"] = value; }
   void set video2(String value) { _properties["video2"] = value; }
   void set video3(String value) { _properties["video3"] = value; }
+
+  LinkedInModule linkedInModule = new LinkedInModule();
 }

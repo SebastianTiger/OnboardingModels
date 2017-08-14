@@ -7,6 +7,10 @@ class PushNotification extends ModelBase
   {
     email = true;
     sms = true;
+    emailEmbedded = true;
+
+    emailMessage = "";
+    smsMessage = "";
   }
 
   @override
@@ -18,6 +22,7 @@ class PushNotification extends ModelBase
     smsMessage = data["sms_message"];
     email = data["email"] == "1";
     sms = data["sms"] == "1";
+    emailEmbedded = data["email_embedded"] == "1";
   }
 
   @override
@@ -47,6 +52,7 @@ class PushNotification extends ModelBase
   String get smsMessage => _properties["sms_message"];
   bool get email => _properties["email"];
   bool get sms => _properties["sms"];
+  bool get emailEmbedded => _properties["email_embedded"];
 
   void set name(String value) { _properties["name"] = value; }
   void set emailSubject(String value) { _properties["email_subject"] = value; }
@@ -54,4 +60,5 @@ class PushNotification extends ModelBase
   void set smsMessage(String value) { _properties["sms_message"] = value; }
   void set email(bool value) { _properties["email"] = value; }
   void set sms(bool value) { _properties["sms"] = value; }
+  void set emailEmbedded(bool value) { _properties["email_embedded"] = value; }
 }

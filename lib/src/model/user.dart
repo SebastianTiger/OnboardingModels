@@ -8,6 +8,7 @@ class User extends ModelBase
     _properties["created"] = new DateTime.now();
     state = "video1";
     active = true;
+    emailEmbedded = true;
 
     firstname = lastname = username = email = phone = emailMessage = emailSubject = smsMessage = "";
   }
@@ -26,9 +27,17 @@ class User extends ModelBase
     emailMessage = data["email_message"];
     smsMessage = data["sms_message"];
     emailSubject = data["email_subject"];
+    emailEmbedded = data["email_embedded"] == "1";
     state = data["state"];
     course = data["course"];
     active = data["active"] == "1";
+    try
+    {
+      Map<String, dynamic> moduleData = JSON.decode(data["module_data"]);
+      if (moduleData.containsKey("linkedin")) linkedInModule = new LinkedInModule.decode(moduleData["linkedin"]);
+      /// TODO decode any new modules here
+    }
+    on FormatException catch (e) { print(e); }
 
     if (data["actions"] != null)
     {
@@ -64,6 +73,13 @@ class User extends ModelBase
     Map<String, dynamic> data = super.encode();
     data["actions"] = JSON.encode(actions.map((action) => action.userIndexEncoded).toList());
     data["learning_contents"] = JSON.encode(learningContents.map((learning_content) => learning_content.userIndexEncoded).toList());
+
+    Map<String, dynamic> moduleData = new Map();
+    if (linkedInModule != null) moduleData["linkedin"] = linkedInModule.data;
+    /// TODO encode any new modules here
+
+    data["module_data"] = JSON.encode(moduleData);
+
     return data;
   }
 
@@ -77,6 +93,7 @@ class User extends ModelBase
     output["epost"] = email;
     output["tel"] = phone;
     output["start"] = start;
+    output["inbjuden"] = (notified == null) ? null : ModelBase.df.format(notified);
     return output;
   }
 
@@ -112,6 +129,7 @@ class User extends ModelBase
   String get emailMessage => _properties["email_message"];
   String get smsMessage => _properties["sms_message"];
   String get emailSubject => _properties["email_subject"];
+  bool get emailEmbedded => _properties["email_embedded"];
   String get state => _properties["state"];
   String get course => _properties["course"];
   bool get active => _properties["active"];
@@ -147,7 +165,10 @@ class User extends ModelBase
   void set emailMessage(String value) { _properties["email_message"] = value; }
   void set smsMessage(String value) { _properties["sms_message"] = value; }
   void set emailSubject(String value) { _properties["email_subject"] = value; }
+  void set emailEmbedded(bool value) { _properties["email_embedded"] = value; }
   void set state(String value) { _properties["state"] = value; }
   void set course(String value) { _properties["course"] = value; }
   void set active(bool value) { _properties["active"] = value; }
+
+  LinkedInModule linkedInModule = new LinkedInModule();
 }

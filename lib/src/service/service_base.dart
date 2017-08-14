@@ -33,7 +33,6 @@ abstract class ServiceBase
     {
       throw new Exception("${response.body} (http-status: ${response.statusCode})");
     }
-
     return JSON.decode(response.body);
   }
 

@@ -1,6 +1,7 @@
 library onboarding_models;
 
 export 'src/model/model_base.dart';
+export 'src/model/modules/linkedin.dart';
 export 'src/service/admin_auth_service.dart';
 export 'src/service/calendar_service.dart';
 export 'src/service/config_service.dart';
