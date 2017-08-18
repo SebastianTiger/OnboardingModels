@@ -193,6 +193,7 @@ class PhraseService
     "reset_password" : "återställ lösenord",
     "reset_password_description" : "Vi har skickat ett mejl till dig med en återställningsnyckel, klistra in den nedan för att uppdatera ditt lösenord.",
     "result" : "resultat",
+    "rows" : "rader",
     "save" : "spara",
     "select" : "välj",
     "select_time" : "välj tid",
