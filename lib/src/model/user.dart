@@ -88,12 +88,12 @@ class User extends ModelBase
   {
     Map<String, String> output = new Map();
     output["skapad"] = ModelBase.df.format(created);
-    output["förnamn"] = firstname;
-    output["efternamn"] = lastname;
-    output["epost"] = email;
+    output["namn"] = "$firstname $lastname";
+    output["anv.namn"] = username;
+    output["mejl"] = email;
     output["tel"] = phone;
     output["start"] = start;
-    output["inbjuden"] = (notified == null) ? null : ModelBase.df.format(notified);
+    //output["inbjuden"] = (notified == null) ? null : ModelBase.df.format(notified);
     return output;
   }
 

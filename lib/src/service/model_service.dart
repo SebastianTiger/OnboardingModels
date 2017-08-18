@@ -8,6 +8,7 @@ import 'package:onboarding_models/src/service/service_base.dart';
 part 'action_service.dart';
 part 'course_service.dart';
 part 'learning_content_service.dart';
+part 'log_service.dart';
 part 'push_notification_service.dart';
 part 'user_service.dart';
 
@@ -19,7 +20,7 @@ abstract class ModelService extends ServiceBase
   {
     try
     {
-      return _onDataFetched((where == null) ? await httpGET(_source) : await httpGET("$_source?$where"), buffer);
+      return _onDataFetched((where == null) ? await httpGET(_source) : await httpGET("$_source?${Uri.encodeFull(where)}"), buffer);
     }
     catch (e)
     {

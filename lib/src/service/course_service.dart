@@ -6,11 +6,7 @@ class CourseService extends ModelService
   CourseService(this._actionService, this._learningContentService) : super("course");
 
   @override
-  Course getModel(String id)
-  {
-    if (!_data.containsKey(id)) return null;
-    return _data[id];
-  }
+  Course getModel(String id) => (_data.containsKey(id)) ? _data[id] : null;
 
   @override
   Future<Course> fetchModel(String id) async

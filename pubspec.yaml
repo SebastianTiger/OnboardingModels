@@ -6,6 +6,7 @@ environment:
 dependencies:
   angular2: ^3.1.0
   angular_components: ^0.5.2
+  d_components: 0.0.8
   fo_components:
     path: ../../Visurus/FoComponents
   http: ^0.11.3+14

@@ -8,6 +8,7 @@ part 'action.dart';
 part 'calendar_event.dart';
 part 'config.dart';
 part 'course.dart';
+part 'log_event.dart';
 part 'learning_content.dart';
 part 'push_notification.dart';
 part 'user.dart';
