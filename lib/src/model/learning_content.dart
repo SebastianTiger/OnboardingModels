@@ -35,10 +35,10 @@ class LearningContent extends ModelBase
   {
     Map<String, String> output = new Map();
     output["id"] = id;
-    output["namn"] = name;
-    output["innehållstyp"] = contentType;
+    output["name"] = name;
+    output["content_type"] = contentType;
     output["url"] = url;
-    output["inbäddad"] = embed.toString();
+    output["embedded"] = embed.toString();
     return output;
   }
 

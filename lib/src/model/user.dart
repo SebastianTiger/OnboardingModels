@@ -87,11 +87,11 @@ class User extends ModelBase
   Map<String, String> toTableRow()
   {
     Map<String, String> output = new Map();
-    output["skapad"] = ModelBase.df.format(created);
-    output["namn"] = "$firstname $lastname";
-    output["anv.namn"] = username;
-    output["mejl"] = email;
-    output["tel"] = phone;
+    output["created"] = ModelBase.df.format(created);
+    output["name"] = "$firstname $lastname";
+    output["username"] = username;
+    output["email"] = email;
+    output["phone"] = phone;
     output["start"] = start;
     //output["inbjuden"] = (notified == null) ? null : ModelBase.df.format(notified);
     return output;

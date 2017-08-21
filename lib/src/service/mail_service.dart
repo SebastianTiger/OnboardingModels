@@ -1,7 +1,8 @@
 import 'dart:async' show Future;
 import 'package:angular2/core.dart';
 import 'package:onboarding_models/src/service/service_base.dart';
-import 'package:onboarding_models/onboarding_models.dart' show Config, ConfigService, PhraseService;
+import 'package:onboarding_models/onboarding_models.dart' show Config, ConfigService;
+import 'package:fo_components/fo_components.dart';
 
 @Injectable()
 class MailService extends ServiceBase
@@ -15,8 +16,7 @@ class MailService extends ServiceBase
       if (_configService.model == null) await _configService.fetchModel();
 
       Config cfg = _configService.model;
-
-
+      
       String embeddedBody =
       """
         <table align="center" border="0" cellpadding="10" cellspacing="0" width="600" style="border-collapse: collapse;">
@@ -26,7 +26,7 @@ class MailService extends ServiceBase
             </td>
           </tr>
           <tr>
-            <td>              
+            <td style='text-align: center;'>              
               $body
             </td>
           </tr>

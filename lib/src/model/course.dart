@@ -64,7 +64,6 @@ class Course extends ModelBase
 
     data["module_data"] = JSON.encode(moduleData);
 
-
     return data;
   }
 
@@ -72,7 +71,7 @@ class Course extends ModelBase
   Map<String, String> toTableRow()
   {
     Map<String, String> output = new Map();
-    output["namn"] = name;
+    output["name"] = name;
     return output;
   }
 

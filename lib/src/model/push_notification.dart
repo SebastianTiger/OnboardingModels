@@ -37,8 +37,8 @@ class PushNotification extends ModelBase
   {
     Map<String, String> output = new Map();
     output["id"] = id;
-    output["namn"] = name;
-    output["e-post"] = email.toString();
+    output["name"] = name;
+    output["email"] = email.toString();
     output["sms"] = sms.toString();
     return output;
   }

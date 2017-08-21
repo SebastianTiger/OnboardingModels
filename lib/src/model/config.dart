@@ -9,6 +9,7 @@ class Config extends ModelBase
     smsCount = int.parse(_properties["sms_count"]);
     uploadQuota = int.parse(_properties["upload_quota"]);
     modules = JSON.decode(_properties["modules"]);
+    services = JSON.decode(_properties["services"]);
 
     int dotIndex = Uri.base.host.indexOf(".");
     _client = Uri.base.host.substring(0, (dotIndex > 0) ? dotIndex : Uri.base.host.length);
@@ -32,6 +33,7 @@ class Config extends ModelBase
   int get smsCount => _properties["sms_count"];
   int get uploadQuota =>  _properties["upload_quota"];
   List<String> get modules => _properties["modules"];
+  List<String> get services => _properties["services"];
   String get client => _client;
 
   void set color1(String value) { _properties["color1"] = value; }
@@ -44,6 +46,7 @@ class Config extends ModelBase
   void set smsCount(int value) { _properties["sms_count"] = value; }
   void set uploadQuota(int value) { _properties["upload_quota"] = value; }
   void set modules(List<String> value) { _properties["modules"] = value; }
+  void set services(List<String> value) { _properties["services"] = value; }
 
   String _client;
 }
