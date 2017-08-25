@@ -2,19 +2,19 @@ import 'dart:async' show Future;
 import 'dart:convert' show JSON;
 import 'package:http/browser_client.dart';
 import 'package:http/http.dart' as http show Response;
+import '../exception/http_error.dart';
 
-abstract class ServiceBase
+abstract class HttpService
 {
+  HttpService();
+
   Future<dynamic> httpPOST(String url, Map<String, dynamic> body) async
   {
     _loading = true;
     http.Response response = await client.post(_apiBase + url, body: JSON.encode(body));
     _loading = false;
 
-    if (response.statusCode != 200)
-    {
-      throw new Exception("${response.body} (http-status: ${response.statusCode})");
-    }
+    if (response.statusCode != 200) throw new HttpError(response);
 
     return response.body;
   }
@@ -29,10 +29,8 @@ abstract class ServiceBase
     http.Response response = await client.get(_apiBase + url);
     _loading = false;
 
-    if (response.statusCode != 200)
-    {
-      throw new Exception("${response.body} (http-status: ${response.statusCode})");
-    }
+    if (response.statusCode != 200) throw new HttpError(response);
+
     return JSON.decode(response.body);
   }
 
@@ -45,10 +43,7 @@ abstract class ServiceBase
     http.Response response = await client.put(_apiBase + url, body: JSON.encode(body));
     _loading = false;
 
-    if (response.statusCode != 200)
-    {
-      throw new Exception("${response.body} (http-status: ${response.statusCode})");
-    }
+    if (response.statusCode != 200) throw new HttpError(response);
 
     return response.body;
   }
@@ -59,10 +54,7 @@ abstract class ServiceBase
     http.Response response = await client.delete(_apiBase + url);
     _loading = false;
 
-    if (response.statusCode != 200)
-    {
-      throw new Exception("${response.body} (http-status: ${response.statusCode})");
-    }
+    if (response.statusCode != 200) throw new HttpError(response);
   }
 
   bool get loading => _loading;

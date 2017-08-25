@@ -1,9 +1,9 @@
 import 'dart:async' show Future;
 import 'package:angular2/core.dart';
-import 'package:onboarding_models/src/service/service_base.dart';
+import 'package:onboarding_models/src/service/http_service.dart';
 
 @Injectable()
-class SmsService extends ServiceBase
+class SmsService extends HttpService
 {
   SmsService();
 

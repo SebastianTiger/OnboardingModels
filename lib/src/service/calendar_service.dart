@@ -1,10 +1,10 @@
 import 'dart:async';
 import 'package:angular2/angular2.dart';
 import '../model/model_base.dart' show CalendarEvent;
-import 'package:onboarding_models/src/service/service_base.dart';
+import 'package:onboarding_models/src/service/http_service.dart';
 
 @Injectable()
-class CalendarService extends ServiceBase
+class CalendarService extends HttpService
 {
   CalendarService();
 

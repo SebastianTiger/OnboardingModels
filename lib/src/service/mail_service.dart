@@ -1,11 +1,11 @@
 import 'dart:async' show Future;
 import 'package:angular2/core.dart';
-import 'package:onboarding_models/src/service/service_base.dart';
+import 'package:onboarding_models/src/service/http_service.dart';
 import 'package:onboarding_models/onboarding_models.dart' show Config, ConfigService;
 import 'package:fo_components/fo_components.dart';
 
 @Injectable()
-class MailService extends ServiceBase
+class MailService extends HttpService
 {
   MailService(this._configService, this._phraseService);
 

@@ -1,10 +1,14 @@
 import 'dart:async' show Future;
 import 'package:angular2/core.dart';
 import 'package:onboarding_models/src/model/file.dart';
-import 'package:onboarding_models/src/service/service_base.dart';
+import 'package:onboarding_models/src/service/http_service.dart';
+
+/**
+ * Manage files on admin side
+ */
 
 @Injectable()
-class FileService extends ServiceBase
+class FileService extends HttpService
 {
   FileService()
   {

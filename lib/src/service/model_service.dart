@@ -3,7 +3,7 @@ library model_service;
 import 'dart:async';
 import 'package:angular2/core.dart';
 import 'package:onboarding_models/src/model/model_base.dart';
-import 'package:onboarding_models/src/service/service_base.dart';
+import 'package:onboarding_models/src/service/http_service.dart';
 
 part 'action_service.dart';
 part 'course_service.dart';
@@ -12,21 +12,13 @@ part 'log_service.dart';
 part 'push_notification_service.dart';
 part 'user_service.dart';
 
-abstract class ModelService extends ServiceBase
+abstract class ModelService extends HttpService
 {
   ModelService(this._source);
 
   Future<Map<String, ModelBase>> fetchAll({String where = null, buffer = true}) async
   {
-    try
-    {
-      return _onDataFetched((where == null) ? await httpGET(_source) : await httpGET("$_source?${Uri.encodeFull(where)}"), buffer);
-    }
-    catch (e)
-    {
-      print(e);
-      return {};
-    }
+    return _onDataFetched((where == null) ? await httpGET(_source) : await httpGET("$_source?${Uri.encodeFull(where)}"), buffer);
   }
 
   Future delete(ModelBase model) async

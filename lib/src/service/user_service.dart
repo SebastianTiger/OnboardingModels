@@ -13,6 +13,19 @@ class UserService extends ModelService
     return user;
   }
 
+  Future<User> fetchByUsername(String username) async
+  {
+    Map<String, User> users = await super.fetchAll(where: "username=$username");
+
+    /**
+     * An exception here indicates that the digicy user registry has become out
+     * of sync with the auth user registry (the user exists in auth but not in
+     * digicy user registry)
+     */
+    if (users.length != 1) throw new Exception("User \"$username\" was not found");
+    return users.values.first;
+  }
+
   @override
   User create(Map<String, dynamic> model_data) => new User.decode(model_data);
 

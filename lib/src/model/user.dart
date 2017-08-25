@@ -93,7 +93,6 @@ class User extends ModelBase
     output["email"] = email;
     output["phone"] = phone;
     output["start"] = start;
-    //output["inbjuden"] = (notified == null) ? null : ModelBase.df.format(notified);
     return output;
   }
 
@@ -102,6 +101,19 @@ class User extends ModelBase
 
   List<Action> _actions = new List();
   List<LearningContent> learningContents = new List();
+
+  /**
+   * Returns the same action as the one supplied in [value], but tied to the user
+   * TODO change this so that it only has user-specific Action properties, and not a full Action object?
+   */
+  Action getUserAction(Action value) => actions.firstWhere((action) => action == value, orElse: () => null);
+
+
+  /**
+   * Returns the same learning content as the one supplied in [value], but tied to the user
+   * TODO change this so that the user only has user-specific LearningContent properties, and not a full LearningContent object?
+   */
+  LearningContent getUserLearningContent(LearningContent value) => learningContents.firstWhere((lc) => lc == value, orElse: () => null);
 
   String parsePlaceholders(String input)
   {
@@ -169,6 +181,8 @@ class User extends ModelBase
   void set state(String value) { _properties["state"] = value; }
   void set course(String value) { _properties["course"] = value; }
   void set active(bool value) { _properties["active"] = value; }
+
+  String token;
 
   LinkedInModule linkedInModule = new LinkedInModule();
 }

@@ -1,10 +1,10 @@
 import 'dart:async';
 import 'package:angular2/angular2.dart';
 import 'package:onboarding_models/src/model/model_base.dart' show Config;
-import 'package:onboarding_models/src/service/service_base.dart';
+import 'package:onboarding_models/src/service/http_service.dart';
 
 @Injectable()
-class ConfigService extends ServiceBase
+class ConfigService extends HttpService
 {
   ConfigService();
 
