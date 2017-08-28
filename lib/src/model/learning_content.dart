@@ -34,7 +34,6 @@ class LearningContent extends ModelBase
   Map<String, String> toTableRow()
   {
     Map<String, String> output = new Map();
-    output["id"] = id;
     output["name"] = name;
     output["content_type"] = contentType;
     output["url"] = url;

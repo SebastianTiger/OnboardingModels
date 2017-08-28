@@ -25,9 +25,8 @@ class Action extends ModelBase
   Map<String, String> toTableRow()
   {
     Map<String, String> output = new Map();
-    output["id"] = id;
-    output["namn"] = name;
-    output["plats"] = location;
+    output["name"] = name;
+    output["location"] = location;
     return output;
   }
 
