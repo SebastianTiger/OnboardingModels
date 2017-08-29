@@ -1,5 +1,5 @@
 import 'dart:async';
-import 'package:angular2/angular2.dart';
+import 'package:angular/angular.dart';
 import '../model/model_base.dart' show CalendarEvent;
 import 'package:onboarding_models/src/service/http_service.dart';
 

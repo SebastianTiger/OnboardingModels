@@ -1,4 +1,4 @@
-import 'package:angular2/angular2.dart';
+import 'package:angular/angular.dart';
 import 'package:vi_auth_client/vi_auth_client.dart';
 
 @Injectable()

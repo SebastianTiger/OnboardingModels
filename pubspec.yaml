@@ -2,23 +2,16 @@ name: onboarding_models
 version: 0.0.9
 description: Digicy Onboarding models and services
 environment:
-  sdk: '>=1.23.0 <2.0.0'
+  sdk: '>=1.24.2 <2.0.0'
 dependencies:
-  angular2: ^3.1.0
-  angular_components: ^0.5.2
+  angular: "4.0.0-beta"
+  angular_components: "^0.6.0-beta"
   fo_components:
     path: ../../Visurus/FoComponents
   http: ^0.11.3+14
   intl: ^0.15.0
   vi_auth_client:
     path: ../../Visurus/ViAuthClient
-dev_dependencies:
-  browser: ^0.10.0+2
-  dart_to_js_script_rewriter: ^1.0.2
+
 transformers:
-- angular2:
-    platform_directives:
-    - 'package:angular2/common.dart#COMMON_DIRECTIVES'
-    platform_pipes:
-    - 'package:angular2/common.dart#COMMON_PIPES'
-    #entry_points: web/main.dart
+  - angular

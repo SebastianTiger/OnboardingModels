@@ -1,5 +1,5 @@
 import 'dart:async' show Future;
-import 'package:angular2/core.dart';
+import 'package:angular/angular.dart';
 import 'package:onboarding_models/src/service/http_service.dart';
 
 @Injectable()
