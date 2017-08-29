@@ -5,7 +5,7 @@ class LearningContent extends ModelBase
   @override
   LearningContent() : super()
   {
-    icon = "correct";
+    icon = "check";
     embed = false;
     contentType = "file";
   }
