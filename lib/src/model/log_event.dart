@@ -4,8 +4,8 @@ enum EVENT_TYPE
 {
   logged_in,
   received_invitation,
-  received_push_notification_email,
-  received_push_notification_sms,
+  received_email,
+  received_sms,
   viewed_learning_content,
   was_created,
   was_deleted,

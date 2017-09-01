@@ -36,7 +36,6 @@ class PushNotification extends ModelBase
   Map<String, String> toTableRow()
   {
     Map<String, String> output = new Map();
-    output["id"] = id;
     output["name"] = name;
     output["email"] = email.toString();
     output["sms"] = sms.toString();

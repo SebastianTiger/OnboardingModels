@@ -1,7 +1,7 @@
 library model_base;
 import 'dart:convert';
 import 'package:intl/intl.dart' show DateFormat;
-import 'package:fo_components/fo_components.dart' show DataTableModel;
+import 'package:fo_components/fo_components.dart' show FoModel;
 import 'package:onboarding_models/src/model/modules/linkedin.dart';
 
 part 'action.dart';
@@ -13,7 +13,7 @@ part 'learning_content.dart';
 part 'push_notification.dart';
 part 'user.dart';
 
-abstract class ModelBase extends DataTableModel
+abstract class ModelBase extends FoModel
 {
   ModelBase() : super(null);
 

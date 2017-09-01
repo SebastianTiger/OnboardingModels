@@ -1,6 +1,6 @@
-import 'package:fo_components/fo_components.dart' show DataTableModel;
+import 'package:fo_components/fo_components.dart' show FoModel;
 
-class FileModel extends DataTableModel
+class FileModel extends FoModel
 {
   FileModel(this._name, this._type, this._size) : super(_name);
 
