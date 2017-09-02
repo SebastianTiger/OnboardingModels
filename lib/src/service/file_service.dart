@@ -12,20 +12,23 @@ class FileService extends HttpService
 {
   FileService()
   {
-    httpGET("file").then(_onDataFetched).catchError((e) => print(e));
+    //fetchAll();
+  }
+
+  Future fetchAll() async
+  {
+    _onDataFetched(await httpGET("file"));
+  }
+
+  Future delete(String filename) async
+  {
+    await httpDELETE("file/$filename");
   }
 
   Future put(String filename, String url_data) async
   {
-    try
-    {
-      await httpPUT("file", {"filename":filename, "data":url_data});
-      await _onDataFetched(await httpGET("file"));
-    }
-    catch (e)
-    {
-      throw new Exception(e.target.responseText);
-    }
+    await httpPUT("file", {"filename":filename, "data":url_data});
+    await _onDataFetched(await httpGET("file"));
   }
 
   Future<String> fetchUsedSpace() async
@@ -40,5 +43,5 @@ class FileService extends HttpService
   }
 
   Map<String, FileModel> get data => _data;
-  Map<String, FileModel> _data;
+  Map<String, FileModel> _data = new Map();
 }

@@ -1,9 +1,10 @@
 library onboarding_models;
 
 export 'src/exception/http_error.dart';
+export 'src/model/file.dart';
 export 'src/model/model_base.dart';
-export 'src/model/phrases.dart';
 export 'src/model/modules/linkedin.dart';
+export 'src/model/phrases.dart';
 export 'src/service/admin_auth_service.dart';
 export 'src/service/calendar_service.dart';
 export 'src/service/config_service.dart';
