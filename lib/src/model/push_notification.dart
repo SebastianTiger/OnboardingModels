@@ -6,8 +6,8 @@ class PushNotification extends ModelBase
   PushNotification() : super()
   {
     email = true;
-    sms = true;
     emailEmbedded = true;
+    sms = false;
 
     emailMessage = "";
     smsMessage = "";
