@@ -15,3 +15,7 @@ dependencies:
 
 transformers:
   - angular
+
+web:
+  compiler:
+    debug: dartdevc

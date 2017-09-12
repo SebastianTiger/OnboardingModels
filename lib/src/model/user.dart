@@ -87,12 +87,12 @@ class User extends ModelBase
   Map<String, String> toTableRow()
   {
     Map<String, String> output = new Map();
-    output["created"] = ModelBase.df.format(created);
     output["name"] = "$firstname $lastname";
     output["username"] = username;
     output["email"] = email;
     output["phone"] = phone;
     output["start"] = start;
+    output["status"] = active ? "active" : "inactive";
     return output;
   }
 

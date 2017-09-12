@@ -138,6 +138,7 @@ class Phrases
       "library" : "bibliotek",
       "ignore" : "ignorera",
       "in_library" : "i bibliotek",
+      "inactive" : "inaktiv",
       "include_inactive" : "inkludera inaktiva",
       "index.html" : "dashboard",
       "information" : "information",
