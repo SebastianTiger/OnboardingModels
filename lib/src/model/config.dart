@@ -13,7 +13,7 @@ class Config extends ModelBase
 
     int dotIndex = Uri.base.host.indexOf(".");
     _client = Uri.base.host.substring(0, (dotIndex > 0) ? dotIndex : Uri.base.host.length);
-    if (_client == "localhost") _client = "sandbox";
+    if (_client == "localhost") _client = "larbyran"; /* TODO CHANGE TO SANDBOX */
   }
 
   @override
