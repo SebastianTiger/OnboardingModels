@@ -12,13 +12,12 @@ class CalendarEvent extends ModelBase
     _properties["starts"] = new List();
     _properties["ends"] = new List();
 
-    final DateFormat df = new DateFormat("yyyyMMdd'T'HHmmss");
     for (DateTime dt in dates)
     {
       DateTime start = dt;
       DateTime end = dt.add(const Duration(hours: 1));
-      _properties["starts"].add("${df.format(start)}");
-      _properties["ends"].add("${df.format(end)}");
+      _properties["starts"].add("${dateFormat.format(start)}");
+      _properties["ends"].add("${dateFormat.format(end)}");
     }
   }
 
@@ -35,4 +34,25 @@ class CalendarEvent extends ModelBase
 
     return data;
   }
+
+  String toICAL()
+  {
+    String output = "";
+    String timestamp = dateFormat.format(new DateTime.now()) + "Z";
+    for (int index = 0; index < _properties["descriptions"].length; index++)
+    {
+      output += "BEGIN:VEVENT\n";
+      output += "UID:${_properties['filename']}-$index\n";
+      output += "DTSTAMP:$timestamp\n";
+      output += "DTSTART;TZID=Europe/Stockholm:${_properties['starts'][index]}\n"; /* TODO Internationalization */
+      output += "DTEND;TZID=Europe/Stockholm:${_properties['ends'][index]}\n";
+      output += "SUMMARY:${_properties['summaries'][index]}\n";
+      output += "LOCATION:${_properties["locations"][index]}\n";
+      output += "DESCRIPTION:${_properties["descriptions"][index]}\n";
+      output += "END:VEVENT";
+    }
+    return output;
+  }
+
+  final DateFormat dateFormat = new DateFormat("yyyyMMdd'T'HHmmss");
 }
