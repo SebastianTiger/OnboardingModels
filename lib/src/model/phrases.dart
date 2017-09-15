@@ -128,6 +128,7 @@ class Phrases
       "filename" : "filnamn",
       "file_manager" : "filhanterare",
       "files" : "filer",
+      "files_description" : "Här kan ladda upp och ta bort filer. Filerna kan användas när du skapar lärinnehåll.",
       "filter" : "filtrera",
       "firstname" : "förnamn",
       "first_day_at_work" : "första dagen",
