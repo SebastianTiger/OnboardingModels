@@ -39,7 +39,7 @@ class FileService extends HttpService
   void _onDataFetched(List<Map<String, dynamic>> response)
   {
     _data = new Map();
-    response.forEach((row) => _data[row["name"]] = new FileModel(row["name"], row["type"], row["size"]));
+    response.forEach((row) => _data[row["name"]] = new FileModel(row["name"], row["type"], row["size_kb"]));
   }
 
   Map<String, FileModel> get data => _data;

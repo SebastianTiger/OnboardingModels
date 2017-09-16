@@ -49,7 +49,7 @@ class CalendarEvent extends ModelBase
       output += "SUMMARY:${_properties['summaries'][index]}\n";
       output += "LOCATION:${_properties["locations"][index]}\n";
       output += "DESCRIPTION:${_properties["descriptions"][index]}\n";
-      output += "END:VEVENT";
+      output += "END:VEVENT\n";
     }
     return output;
   }

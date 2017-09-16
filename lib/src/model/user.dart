@@ -61,8 +61,10 @@ class User extends ModelBase
       {
         LearningContent learningContent = new LearningContent();
         learningContent.id = row["id"];
-        learningContent.viewed = row["viewed"];
-        learningContents.add(learningContent);
+
+        if (row["viewed"] is String) learningContent.viewed = row["viewed"] == "1";
+        else learningContent.viewed = row["viewed"];
+        _learningContents.add(learningContent);
       }
     }
   }
@@ -72,7 +74,13 @@ class User extends ModelBase
   {
     Map<String, dynamic> data = super.encode();
     data["actions"] = JSON.encode(actions.map((action) => action.userIndexEncoded).toList());
-    data["learning_contents"] = JSON.encode(learningContents.map((learning_content) => learning_content.userIndexEncoded).toList());
+
+    List<Map<String, dynamic>> encodedLearningContents = new List();
+    for (LearningContent lc in _learningContents)
+    {
+      encodedLearningContents.add({"id":lc.id, "viewed":lc.viewed});
+    }
+    data["learning_contents"] = JSON.encode(encodedLearningContents);
 
     Map<String, dynamic> moduleData = new Map();
     if (linkedInModule != null) moduleData["linkedin"] = linkedInModule.data;
@@ -100,7 +108,7 @@ class User extends ModelBase
   String toString() => username;
 
   List<Action> _actions = new List();
-  List<LearningContent> learningContents = new List();
+  List<LearningContent> _learningContents = new List();
 
   /**
    * Returns the same action as the one supplied in [value], but tied to the user
@@ -113,7 +121,7 @@ class User extends ModelBase
    * Returns the same learning content as the one supplied in [value], but tied to the user
    * TODO change this so that the user only has user-specific LearningContent properties, and not a full LearningContent object?
    */
-  LearningContent getUserLearningContent(LearningContent value) => learningContents.firstWhere((lc) => lc == value, orElse: () => null);
+  LearningContent getUserLearningContent(LearningContent value) => _learningContents.firstWhere((lc) => lc == value, orElse: () => null);
 
   String parsePlaceholders(String input)
   {
@@ -129,6 +137,7 @@ class User extends ModelBase
   bool get hasEmail => email != null && email.isNotEmpty;
   bool get hasPhone => phone != null && phone.isNotEmpty;
   List<Action> get actions => _actions;
+  List<LearningContent> get learningContents => _learningContents;
   DateTime get startAsDateTime => _properties["start_date"];
   DateTime get created => _properties["created"];
   String get firstname => _properties["firstname"];
@@ -158,6 +167,23 @@ class User extends ModelBase
     {
       action.date = startAsDateTime.add(new Duration(days: action.day));
     }
+  }
+
+  /**
+   * Set learning contents, but make sure previous learning contents keep their 'viewed' status
+   */
+  void set learningContents(List<LearningContent> value)
+  {
+    List<LearningContent> buffer = new List.from(_learningContents);
+    _learningContents.clear();
+
+    for (LearningContent lc in value)
+    {
+      if (buffer.contains(lc)) _learningContents.add(buffer.firstWhere((blc) => blc.id == lc.id));
+      else _learningContents.add(lc);
+    }
+
+    _learningContents = new List.from(_learningContents);
   }
   void set firstname(String value) { _properties["firstname"] = value; }
   void set lastname(String value) { _properties["lastname"] = value; }

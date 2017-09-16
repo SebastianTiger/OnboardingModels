@@ -9,7 +9,7 @@ class UserService extends ModelService
   Future<User> fetchModel(String id) async
   {
     User user = await super.fetchModel(id);
-    _populateActionsAndLearningContents(user);
+    populateActionsAndLearningContents(user);
     return user;
   }
 
@@ -35,7 +35,7 @@ class UserService extends ModelService
     return _data[id];
   }
 
-  void _populateActionsAndLearningContents(User user)
+  void populateActionsAndLearningContents(User user)
   {
     if (user == null || _learningContentService == null || _actionService == null) return;
 
@@ -54,7 +54,7 @@ class UserService extends ModelService
     {
       String id = row["id"];
       User usr = new User.decode(row);
-      _populateActionsAndLearningContents(usr);
+      populateActionsAndLearningContents(usr);
       output[id] = usr;
     });
     if (buffer) _data = output;

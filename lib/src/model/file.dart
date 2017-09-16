@@ -2,18 +2,16 @@ import 'package:fo_components/fo_components.dart' show FoModel;
 
 class FileModel extends FoModel
 {
-  FileModel(String name, this._type, this._size) : super(name);
+  FileModel(String name, this._type, this._sizeKb) : super(name);
 
   Map<String, String> toTableRow()
   {
-    return {"name" : id, "type" : _type, "size" : _size};
+    return {"name" : id, "type" : _type, "size_kb" : _sizeKb.toString()};
   }
 
-  //String get name => _name;
   String get type => _type;
-  String get size => _size;
+  int get sizeKb => _sizeKb;
 
-  //final String _name;
   final String _type;
-  final String _size;
+  final int _sizeKb;
 }

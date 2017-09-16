@@ -56,7 +56,7 @@ class LearningContent extends ModelBase
   }
 
   Map<String, dynamic> get courseIndexEncoded => {"id":id};
-  Map<String, dynamic> get userIndexEncoded => {"id":id, "viewed":viewed};
+ // Map<String, dynamic> get userIndexEncoded => {"id":id, "viewed":viewed};
 
   String get name => _properties["name"];
   String get description => _properties["description"];
