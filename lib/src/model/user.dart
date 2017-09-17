@@ -159,7 +159,7 @@ class User extends ModelBase
   {
     if (start == null)
     {
-      start = ModelBase.dfDate.format(new DateTime.now());
+      start = ModelBase.dfDate.format(new DateTime.now().add(const Duration(days: 30)));
     }
 
     _actions = new List.from(value);
