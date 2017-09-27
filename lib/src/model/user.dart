@@ -63,6 +63,7 @@ class User extends ModelBase
         learningContent.id = row["id"];
 
         if (row["viewed"] is String) learningContent.viewed = row["viewed"] == "1";
+        else if (row["viewed"] is int) learningContent.viewed = row["viewed"] == 1;
         else learningContent.viewed = row["viewed"];
         _learningContents.add(learningContent);
       }

@@ -31,6 +31,7 @@ abstract class ModelBase extends FoModel
     {
       if (value is String || value is num || value is bool) data[key] = value;
       else if (value is DateTime) data[key] = df.format(value);
+      else if (value == null) data[key] = null;
     });
     data["id"] = id;
     return data;
