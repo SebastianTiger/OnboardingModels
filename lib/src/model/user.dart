@@ -9,6 +9,7 @@ class User extends ModelBase
     state = "video1";
     active = true;
     emailEmbedded = true;
+    start = ModelBase.dfDate.format(new DateTime.now().add(const Duration(days: 30)));
 
     firstname = lastname = username = email = phone = emailMessage = emailSubject = smsMessage = "";
   }
