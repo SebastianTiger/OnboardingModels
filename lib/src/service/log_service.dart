@@ -1,7 +1,7 @@
 part of model_service;
 
 @Injectable()
-class LogService extends ModelService
+class LogService extends ModelService<LogEvent>
 {
   LogService() : super("log");
 

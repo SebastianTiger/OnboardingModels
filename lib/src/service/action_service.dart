@@ -1,7 +1,7 @@
 part of model_service;
 
 @Injectable()
-class ActionService extends ModelService
+class ActionService extends ModelService<Action>
 {
   ActionService() : super("action");
 

@@ -1,7 +1,7 @@
 part of model_service;
 
 @Injectable()
-class PushNotificationService extends ModelService
+class PushNotificationService extends ModelService<PushNotification>
 {
   PushNotificationService() : super("push_notification");
 

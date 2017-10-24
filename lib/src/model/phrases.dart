@@ -165,6 +165,7 @@ class Phrases
       "invalid_url" : "Ange en giltig URL (inklusive http / https)",
       "invalid_youtube_id" : "Ange ett giltigt Youtube-ID (11 tecken)",
       "invitation" : "inbjudan",
+      "instructions" : "instruktioner",
       "key" : "nyckel",
       "last_30_days" : "senaste 30 dagarna",
       "last_login" : "senast inloggad",

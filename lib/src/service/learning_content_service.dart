@@ -1,7 +1,7 @@
 part of model_service;
 
 @Injectable()
-class LearningContentService extends ModelService
+class LearningContentService extends ModelService<LearningContent>
 {
   LearningContentService() : super("learning_content");
 

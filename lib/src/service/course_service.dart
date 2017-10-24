@@ -1,7 +1,7 @@
 part of model_service;
 
 @Injectable()
-class CourseService extends ModelService
+class CourseService extends ModelService<Course>
 {
   CourseService(this._actionService, this._learningContentService) : super("course");
 

@@ -12,17 +12,19 @@ part 'log_service.dart';
 part 'push_notification_service.dart';
 part 'user_service.dart';
 
-abstract class ModelService extends HttpService
+abstract class ModelService<T> extends HttpService
 {
   ModelService(this._source);
 
-  Future<Map<String, ModelBase>> fetchAll({String where = null, buffer = true}) async
+  Future<Map<String, T>> fetchAll({String where = null, buffer = true}) async
   {
     return _onDataFetched((where == null) ? await httpGET(_source) : await httpGET("$_source?${Uri.encodeFull(where)}"), buffer);
   }
 
-  Future delete(ModelBase model) async
+  Future delete(T t) async
   {
+    ModelBase model = t as ModelBase;
+
     if (model != null && model.id != null)
     {
       await httpDELETE("$_source/${model.id}");
@@ -31,17 +33,19 @@ abstract class ModelService extends HttpService
     }
   }
 
-  Future<String> put(ModelBase model) async
+  Future<String> put(T t) async
   {
+    ModelBase model = t as ModelBase;
+
     if (model.id == null) model.id = (await httpPUT("$_source", model.encode()));
     else model.id = (await httpPUT("$_source/${model.id}", model.encode()));
 
-    _data[model.id] = model;
+    _data[model.id] = t;
     _data = new Map.from(_data);
     return model.id;
   }
 
-  Future<ModelBase> fetchModel(String id) async
+  Future<T> fetchModel(String id) async
   {
     if (id == null || id.isEmpty) return null;
     Map<String, dynamic> response = await httpGET("$_source/$id");
@@ -49,20 +53,20 @@ abstract class ModelService extends HttpService
     return _data[id];
   }
 
-  ModelBase getModel(String id);
+  T getModel(String id);
 
-  ModelBase create(Map<String, dynamic> data);
+  T create(Map<String, dynamic> data);
 
-  List<ModelBase> getModelsAsList([List<String> ids = null])
+  List<T> getModelsAsList([List<String> ids = null])
   {
     if (_data == null || _data.isEmpty) return [];
     if (ids == null) return _data.values.toList(growable: false);
     else return _data.keys.where(ids.contains).map((key) => _data[key]).toList(growable: false);
   }
 
-  Map<String, ModelBase> getModelsAsMap([List<String> ids = null])
+  Map<String, T> getModelsAsMap([List<String> ids = null])
   {
-    Map<String, ModelBase> output = new Map();
+    Map<String, T> output = new Map();
     if (_data == null || _data.isEmpty) return output;
 
     if (ids == null) _data.keys.forEach((id) => output[id] = _data[id]);
@@ -78,26 +82,25 @@ abstract class ModelService extends HttpService
     {
       Iterable<String> ids = _data.keys.where((id)
       {
-        return _data[id].properties[property] != null &&
-            (_data[id].properties[property] as String).toLowerCase()
-                .compareTo(value.toLowerCase()) == 0;
+        ModelBase model = _data[id] as ModelBase;
+        return model.properties[property] != null && (model.properties[property] as String).toLowerCase().compareTo(value.toLowerCase()) == 0;
       });
-
       return ids.isEmpty ? [] : ids.toList();
     }
     else
     {
       Iterable<String> ids = _data.keys.where((id)
       {
-        return _data[id].properties[property] != null && _data[id].properties[property] == value;
+        ModelBase model = _data[id] as ModelBase;
+        return model.properties[property] != null && model.properties[property] == value;
       });
 
       return (ids.isEmpty) ? [] : ids.toList();
     }
   }
 
-  Map<String, ModelBase> _onDataFetched(List<Map<String, dynamic>> response, bool buffer);
-  Map<String, ModelBase> get data => _data;
-  Map<String, ModelBase> _data = new Map();
+  Map<String, T> _onDataFetched(List<Map<String, dynamic>> response, bool buffer);
+  Map<String, T> get data => _data;
+  Map<String, T> _data = new Map();
   final String _source;
 }
