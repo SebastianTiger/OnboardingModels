@@ -3,15 +3,7 @@ part of model_service;
 @Injectable()
 class UserService extends ModelService<User>
 {
-  UserService(this._actionService, this._learningContentService) : super("user");
-
-  @override
-  Future<User> fetchModel(String id) async
-  {
-    User user = await super.fetchModel(id);
-    populateActionsAndLearningContents(user);
-    return user;
-  }
+  UserService() : super("user");
 
   Future<User> fetchByUsername(String username) async
   {
@@ -35,6 +27,7 @@ class UserService extends ModelService<User>
     return _data[id];
   }
 
+  /*
   void populateActionsAndLearningContents(User user)
   {
     if (user == null || _learningContentService == null || _actionService == null) return;
@@ -45,22 +38,14 @@ class UserService extends ModelService<User>
     user.learningContents.where((lc) => lc.name == null).forEach((lc)
     => lc.copyData(_learningContentService.getModel(lc.id)));
   }
+  */
 
   @override
   Map<String, User> _onDataFetched(List<Map<String, dynamic>> response, bool buffer)
   {
     Map<String, User> output = new Map();
-    response.forEach((row)
-    {
-      String id = row["id"];
-      User usr = new User.decode(row);
-      populateActionsAndLearningContents(usr);
-      output[id] = usr;
-    });
+    response.forEach((row) => output[row['id']] = new User.decode(row));
     if (buffer) _data = output;
     return output;
   }
-
-  final ActionService _actionService;
-  final LearningContentService _learningContentService;
 }

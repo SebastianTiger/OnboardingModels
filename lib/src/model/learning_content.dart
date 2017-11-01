@@ -55,8 +55,12 @@ class LearningContent extends ModelBase
     pushNotificationId = other.pushNotificationId;
   }
 
-  Map<String, dynamic> get courseIndexEncoded => {"id":id};
- // Map<String, dynamic> get userIndexEncoded => {"id":id, "viewed":viewed};
+  void indexDecode(Map<String, dynamic> data)
+  {
+    viewed = data['viewed'];
+  }
+
+  Map<String, dynamic> get indexEncoded => {"id":id, "viewed":viewed};
 
   String get name => _properties["name"];
   String get description => _properties["description"];

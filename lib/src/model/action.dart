@@ -36,6 +36,13 @@ class Action extends ModelBase
     return output;
   }
 
+  void indexDecode(Map<String, dynamic> data)
+  {
+    day = data['day'];
+    time = data['time'];
+  }
+  Map<String, dynamic> get indexEncoded => {"id":id, "day":day, "time":time};
+
   void copyData(Action other)
   {
     name = other.name;
@@ -44,9 +51,6 @@ class Action extends ModelBase
     learningContentId = other.learningContentId;
     pushNotificationRegistry = other.pushNotificationRegistry == null ? new List() : new List.from(other.pushNotificationRegistry);
   }
-
-  Map<String, dynamic> get courseIndexEncoded => {"id":id, "day":day, "time":time, "highlight":highlight};
-  Map<String, dynamic> get userIndexEncoded => {"id":id, "date":ModelBase.dfDate.format(date), "time":time};
 
   String get name => _properties["name"];
   String get description => _properties["description"];
@@ -61,7 +65,6 @@ class Action extends ModelBase
   void set pushNotificationRegistry(List<Map<String, dynamic>> value) { _properties["push_notification_registry"] = value; }
 
   int day = 0;
-  DateTime date;
   String time = "12:00";
   bool highlight = false;
   bool popupOpen = false;

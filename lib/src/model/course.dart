@@ -5,6 +5,8 @@ class Course extends ModelBase
   @override
   Course() : super()
   {
+    actionData = new List();
+    learningContentData = new List();
     name = "";
     video1 = "";
     video2 = "";
@@ -27,36 +29,16 @@ class Course extends ModelBase
     }
     on FormatException catch (e) { print(e); }
 
-    if (data["actions"] != null)
-    {
-      List<Map<String, dynamic>> actionTable = JSON.decode(data["actions"]);
-      for (Map<String, dynamic> row in actionTable)
-      {
-        Action action = new Action();
-        action.id = row["id"];
-        action.day = row["day"];
-        action.time = row["time"];
-        actions.add(action);
-      }
-    }
-    if (data["learning_contents"] != null)
-    {
-      List<Map<String, dynamic>> learningContentTable = JSON.decode(data["learning_contents"]);
-      for (Map<String, dynamic> row in learningContentTable)
-      {
-        LearningContent learningContent = new LearningContent();
-        learningContent.id = row["id"];
-        learningContents.add(learningContent);
-      }
-    }
+    actionData = (data["actions"] == null) ? new List() : JSON.decode(data["actions"]);
+    learningContentData = (data["learning_contents"] == null) ? new List() : JSON.decode(data["learning_contents"]);
   }
 
   @override
   Map<String, dynamic> encode()
   {
     Map<String, dynamic> data = super.encode();
-    data["actions"] = JSON.encode(actions.map((action) => action.courseIndexEncoded).toList());
-    data["learning_contents"] = JSON.encode(learningContents.map((learning_content) => learning_content.courseIndexEncoded).toList());
+    data["actions"] = JSON.encode(actionData);
+    data["learning_contents"] = JSON.encode(learningContentData);
 
     Map<String, dynamic> moduleData = new Map();
     if (linkedInModule != null) moduleData["linkedin"] = linkedInModule.data;
@@ -80,19 +62,20 @@ class Course extends ModelBase
 
   bool get valid =>
       name != null && name.isNotEmpty
-          && actions.isNotEmpty
-          && learningContents.isNotEmpty
           && video1 != null && video1.isNotEmpty
           && video2 != null && video2.isNotEmpty
           && video3 != null && video3.isNotEmpty;
 
-  List<Action> actions = new List();
-  List<LearningContent> learningContents = new List();
+  List<Map<String, String>> get actionData => _properties["action_data"];
+  List<Map<String, dynamic>> get learningContentData => _properties["learning_content_data"];
 
   String get name => _properties["name"];
   String get video1 => _properties["video1"];
   String get video2 => _properties["video2"];
   String get video3 => _properties["video3"];
+
+  void set actionData(List<Map<String, String>> value) { _properties["action_data"] = new List.from(value); }
+  void set learningContentData(List<Map<String, dynamic>> value) { _properties["learning_content_data"] = new List.from(value); }
 
   void set name(String value) { _properties["name"] = value; }
   void set video1(String value) { _properties["video1"] = value; }

@@ -13,6 +13,7 @@ class Config extends ModelBase
 
     int dotIndex = Uri.base.host.indexOf(".");
     _client = Uri.base.host.substring(0, (dotIndex > 0) ? dotIndex : Uri.base.host.length);
+
     if (_client == "localhost") _client = "demo"; /* TODO change to whichever client currently tested (must also be changed on api.introduktion.nu) */
   }
 
@@ -30,6 +31,8 @@ class Config extends ModelBase
   String get imgLogo => _properties["logo_base64"];
   String get imgTimelineBackground => _properties["timeline_background_base64"];
   String get favicon => _properties["favicon_base64"];
+  String get emailFrom => _properties["email_from"];
+  String get smsFrom => _properties["sms_from"];
   int get smsCount => _properties["sms_count"];
   int get uploadQuota =>  _properties["upload_quota"];
   List<String> get modules => _properties["modules"];
@@ -43,6 +46,8 @@ class Config extends ModelBase
   void set imgLogo(String value) { _properties["logo_base64"] = value; }
   void set imgTimelineBackground(String value) { _properties["timeline_background_base64"] = value; }
   void set favicon(String value) { _properties["favicon_base64"] = value; }
+  void set emailFrom(String value) { _properties["email_from"] = value; }
+  void set smsFrom(String value) { _properties["sms_from"] = value; }
   void set smsCount(int value) { _properties["sms_count"] = value; }
   void set uploadQuota(int value) { _properties["upload_quota"] = value; }
   void set modules(List<String> value) { _properties["modules"] = value; }
