@@ -107,7 +107,7 @@ class Phrases
       "error_http_502" : "Felaktig gateway",
       "error_http_503" : "Tjänsten är inte tillgänglig för tillfället",
       "error_http_504" : "Gateway timeout",
-      "error_mysqli_error_1451" : "Operationen kunde inte genomföras eftersom resursen är skrivskyddad. Detta beror vanligtvis på att resursen används av en annan resurs.",
+      "error_mysqli_error_1451" : "Detta objekt är skrivskyddat eftersom det är kopplat till andra resurser. Plocka bort det från de andra resurserna och försök igen.",
       "error_mysqli_error_1062" : "Kunde inte spara objektet på grund av en unik restriktion i databasen.",
       "error_occurred" : "ett fel inträffade",
       "error_unique_action_name" : "det finns redan en aktivitet med detta namn",
