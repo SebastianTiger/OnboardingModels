@@ -43,43 +43,10 @@ class User extends ModelBase
     }
     on FormatException catch (e) { print(e); }
 
-    if (data["actions"] != null)
-    {
-      actionData = JSON.decode(data["actions"]);
-
-      /*
-      for (Map<String, dynamic> row in actionTable)
-      {
-        Action action = new Action();
-        action.id = row["id"];
-        action.date = DateTime.parse(row["date"]);
-        action.date = new DateTime(action.date.year, action.date.month, action.date.day, 12);
-        action.time = row["time"];
-        action.day = action.date.difference(startAsDateTime).inDays;
-        actions.add(action);
-      }
-      actions.sort((a, b) => a.date.difference(b.date).inDays);
-      */
-    }
+    if (data["actions"] != null) actionData = JSON.decode(data["actions"]);
     else actionData = new List();
 
-    if (data["learning_contents"] != null)
-    {
-      learningContentData = JSON.decode(data["learning_contents"]);
-      /*
-      List<Map<String, dynamic>> learningContentTable = JSON.decode(data["learning_contents"]);
-      for (Map<String, dynamic> row in learningContentTable)
-      {
-        LearningContent learningContent = new LearningContent();
-        learningContent.id = row["id"];
-
-        if (row["viewed"] is String) learningContent.viewed = row["viewed"] == "1";
-        else if (row["viewed"] is int) learningContent.viewed = row["viewed"] == 1;
-        else learningContent.viewed = row["viewed"];
-        _learningContents.add(learningContent);
-      }
-      */
-    }
+    if (data["learning_contents"] != null) learningContentData = JSON.decode(data["learning_contents"]);
     else learningContentData = new List();
   }
 
@@ -87,14 +54,7 @@ class User extends ModelBase
   Map<String, dynamic> encode()
   {
     Map<String, dynamic> data = super.encode();
-    data["actions"] = JSON.encode(actionData); //JSON.encode(actions.map((action) => action.userIndexEncoded).toList());
-    /*
-    List<Map<String, dynamic>> encodedLearningContents = new List();
-    for (LearningContent lc in _learningContents)
-    {
-      encodedLearningContents.add({"id":lc.id, "viewed":lc.viewed});
-    }
-    */
+    data["actions"] = JSON.encode(actionData);
     data["learning_contents"] = JSON.encode(learningContentData);
 
     Map<String, dynamic> moduleData = new Map();
@@ -122,13 +82,6 @@ class User extends ModelBase
   @override
   String toString() => username;
 
-  //List<Action> _actions = new List();
-  //List<LearningContent> _learningContents = new List();
-
-  //Action getUserAction(Action value) => actions.firstWhere((action) => action == value, orElse: () => null);
-
-  //LearningContent getUserLearningContent(LearningContent value) => _learningContents.firstWhere((lc) => lc == value, orElse: () => null);
-
   String parsePlaceholders(String input)
   {
     if (username != null) input = input.replaceAll("%user_username%", username);
@@ -142,12 +95,10 @@ class User extends ModelBase
 
   bool get hasEmail => email != null && email.isNotEmpty;
   bool get hasPhone => phone != null && phone.isNotEmpty;
-  //List<Action> get actions => _actions;
 
   List<Map<String, dynamic>> get actionData => _properties["action_data"];
   List<Map<String, dynamic>> get learningContentData => _properties["learning_content_data"];
 
-  //List<LearningContent> get learningContents => _learningContents;
   DateTime get startAsDateTime => _properties["start_date"];
   DateTime get created => _properties["created"];
   String get firstname => _properties["firstname"];
@@ -165,21 +116,6 @@ class User extends ModelBase
   String get course => _properties["course"];
   bool get active => _properties["active"];
 
-  /*
-  void set actions(List<Action> value)
-  {
-    if (start == null)
-    {
-      start = ModelBase.dfDate.format(new DateTime.now().add(const Duration(days: 30)));
-    }
-
-    _actions = new List.from(value);
-    for (Action action in _actions)
-    {
-      action.date = startAsDateTime.add(new Duration(days: action.day));
-    }
-  }
-*/
   void set actionData(List<Map<String, String>> value)
   {
     _properties["action_data"] = new List.from(value);
@@ -190,22 +126,6 @@ class User extends ModelBase
     _properties["learning_content_data"] = new List.from(value);
   }
 
-  /**
-   * Set learning contents, but make sure previous learning contents keep their 'viewed' status
-  void set learningContents(List<LearningContent> value)
-  {
-    List<LearningContent> buffer = new List.from(_learningContents);
-    _learningContents.clear();
-
-    for (LearningContent lc in value)
-    {
-      if (buffer.contains(lc)) _learningContents.add(buffer.firstWhere((blc) => blc.id == lc.id));
-      else _learningContents.add(lc);
-    }
-
-    _learningContents = new List.from(_learningContents);
-  }
-  */
   void set firstname(String value) { _properties["firstname"] = value; }
   void set lastname(String value) { _properties["lastname"] = value; }
   void set username(String value) { _properties["username"] = value; }

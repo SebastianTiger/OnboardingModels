@@ -1,7 +1,32 @@
 part of model_base;
 
+/**
+ * Sandbox
+ *  - separate client source
+ *  - separate database structure
+ *  - can only use on client 'sandbox'
+ *  - same backend code
+ *
+ * Staging
+ *  - separate client source
+ *  - same database structure
+ *  - can use on any client
+ *  - same backend code
+ */
+
+enum BuildMode
+{
+  sandbox,
+  staging,
+  live
+}
+
+
 class Config extends ModelBase
 {
+  final BuildMode _build = BuildMode.sandbox;
+  final String _version = "1.1.31";
+
   @override
   Config.decode(Map<String, dynamic> data) : super.decode(data)
   {
@@ -11,10 +36,13 @@ class Config extends ModelBase
     modules = JSON.decode(_properties["modules"]);
     services = JSON.decode(_properties["services"]);
 
-    int dotIndex = Uri.base.host.indexOf(".");
-    _client = Uri.base.host.substring(0, (dotIndex > 0) ? dotIndex : Uri.base.host.length);
-
-    if (_client == "localhost") _client = "demo"; /* TODO change to whichever client currently tested (must also be changed on api.introduktion.nu) */
+    if (_build == BuildMode.sandbox) _client = "sandbox";
+    else
+    {
+      int dotIndex = Uri.base.host.indexOf(".");
+      _client = Uri.base.host.substring(0, (dotIndex > 0) ? dotIndex : Uri.base.host.length);
+      if (_client == "localhost") _client = "demo"; /* TODO change to whichever client currently tested (must also be changed on api.introduktion.nu) */
+    }
   }
 
   @override
@@ -23,6 +51,8 @@ class Config extends ModelBase
     Map<String, dynamic> data = super.encode();
     return data;
   }
+
+  String get version => (_build == BuildMode.sandbox) ? _version + " (sandbox)" : _version;
 
   String get color1 => _properties["color1"];
   String get color2 => _properties["color2"];
