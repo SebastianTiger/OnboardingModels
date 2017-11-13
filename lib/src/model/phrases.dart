@@ -233,7 +233,7 @@ class Phrases
       "received_sms" : "fick SMS-utskick",
       "recover_password" : "Återställning lösenord introduktion.nu",
       "recover_password_message_admin_email" : "<h1 style='text-align:center'>Hej!</h1><p style='text-align:center'>För att uppdatera ditt lösenord på introduktion.nu, använd följande återställningsnyckel: <strong>%token%</strong></p><p style='text-align:center; font-size:0.9em;'>Om du inte begärt att återställa ditt lösenord kan du ignorera detta meddelande.</p>",
-      "recover_password_messsage_user_sms" : "Dina inloggningsuppgifter: %username% / %password%",
+      "recover_password_message_user_sms" : "Dina inloggningsuppgifter: %username% / %password%",
       "recover_password_message_user_email" : "<h1 style='text-align:center'>Hej!</h1><p style='text-align:center'>För att uppdatera ditt lösenord på introduktion.nu, använd följande återställningsnyckel: <strong>%token%</strong><p style='text-align:center; font-size:0.9em;'>Om du inte begärt att återställa ditt lösenord kan du ignorera detta meddelande.</p>",
       "recover_password_subject_email" : "Återställ lösenord",
       "reminder" : "påminnelse",
