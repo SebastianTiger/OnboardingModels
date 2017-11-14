@@ -318,6 +318,8 @@ class Phrases
       "yes" : "ja",
       "your_first_day_is_in" : "Din första dag hos oss är om",
       "your_profile" : "din profil",
+      "your_timeline" : "din tidslinje",
+      "your_timeline_text" : "Här hittar du de aktiviteter som rör din introduktion."
     }
   };
 }
